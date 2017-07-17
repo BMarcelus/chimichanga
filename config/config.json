@@ -1,0 +1,9 @@
+{
+  "development": {
+    "username": "chimichangadev",
+    "password": "chimichangadev",
+    "database": "chimichangadev",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
