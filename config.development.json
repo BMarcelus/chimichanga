@@ -1,0 +1,38 @@
+{
+  "server": "localhost",
+  "postgres": {
+    "database": "chimichangadev",
+    "username": "chimichangadev",
+    "password": "chimichangadev",
+    "options": {
+      "dialect": "postgres",
+      "dialectOptions": {
+        "multipleStatements": true
+      },
+      "host": "localhost",
+      "port": 5432,
+      "pool": {
+        "max": 10,
+        "min": 0
+      }
+    }
+  },
+  "cookieConfig": {
+    "name": "jwt",
+    "options": {
+      "maxAge": 86400000
+    }
+  },
+  "jwt": {
+    "secret": "3478qweFhfo8oDodSULaIDFyas8d92098102D9341239h512348123h2r038",
+    "issuer": "chimichanga",
+    "audience": "chimichangaClient",
+    "expiresIn": 86400
+  },
+  "routes": [
+    {"url": "/", "file": "routes/index"},
+    {"url": "/users", "file": "routes/users"},
+    {"url": "/tasks", "file": "routes/tasks"}
+  ],
+  "hashKey": "aeBDiasdf09fASFa0sfdad4123"
+}

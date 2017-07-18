@@ -37,6 +37,3 @@ jspm_packages
 .node_repl_history
 .vscode
 .DS_Store
-
-# Email templates
-emails/templates

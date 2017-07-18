@@ -5,7 +5,13 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <form method="POST" action="/users/login" enctype="application/x-www-form-urlencoded">
+      <input required type="email" name="email"/>
+      <input required type="password" name="password"/>
+      <input type="submit" />
+    </form>
+    <form method="GET" action="/tasks">
+      <input type="submit" value="tasks permissions"/>
+    </form>
   </body>
 </html>

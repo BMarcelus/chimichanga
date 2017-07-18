@@ -6,15 +6,21 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "accesscontrol": "^1.5.2",
+    "bcrypt": "^1.0.2",
     "body-parser": "~1.17.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.3",
     "ejs": "~2.5.6",
     "express": "~4.15.2",
+    "http-status": "^1.0.1",
+    "jsonwebtoken": "^7.4.1",
     "morgan": "~1.8.1",
+    "nconf": "^0.8.4",
     "pg": "^6.4.1",
-    "sequelize": "^4.3.2",
+    "sequelize": "^3.30.4",
     "sequelize-cli": "^2.7.0",
-    "serve-favicon": "~2.4.2"
+    "serve-favicon": "~2.4.2",
+    "squel": "^5.11.1"
   }
 }
