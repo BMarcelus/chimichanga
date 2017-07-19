@@ -21,6 +21,7 @@
     "sequelize": "^3.30.4",
     "sequelize-cli": "^2.7.0",
     "serve-favicon": "~2.4.2",
-    "squel": "^5.11.1"
+    "squel": "^5.11.1",
+    "uuid": "^3.1.0"
   }
 }

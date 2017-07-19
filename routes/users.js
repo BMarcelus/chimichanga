@@ -5,10 +5,18 @@ const HTTPStatus = require('http-status');
 const errorCodes = require('../libs/error');
 const jwt = require('../libs/jwt');
 const nconf = require('nconf');
+const emailUtils = require('../libs/email');
+const uuidV4 = require('uuid/v4');
 
 const cookieConfig = nconf.get('cookieConfig');
 const UserModel = models.Users;
 const sequelize = models.sequelize;
+const TokenModel = models.Tokens;
+
+const handleSequelizeErrors = (err) => {
+  console.log(err);
+  return { status: HTTPStatus.INTERNAL_SERVER_ERROR, error: err};
+}
 
 
 /* GET users listing. */
@@ -50,6 +58,8 @@ router.post('/login', (req, res) => {
 
   const email = (req.body.email || '').trim().toLowerCase();
   const password = (req.body.password || '').trim();
+  const remember = req.body.remember;
+
   if (!email) {
     res.status(HTTPStatus.BAD_REQUEST).json({ error: errorCodes.MISSING_EMAIL });
     return;
@@ -58,7 +68,6 @@ router.post('/login', (req, res) => {
     res.status(HTTPStatus.BAD_REQUEST).json({ error: errorCodes.MISSING_PASSWORD });
     return;
   }
-  const remember = true;
   const where = {
     email,
   };
@@ -91,5 +100,42 @@ router.post('/login', (req, res) => {
       res.send(err);
     });
 });
+
+router.post('/reset', (req, res) => {
+    const email = (req.body.email || '').trim();
+    if (!email) {
+      res.status(HTTPStatus.BAD_REQUEST).json({ error: errorCodes.MISSING_EMAIL });
+      return;
+    }
+    const where = {
+      email: email.toLowerCase()
+    }
+    UserModel.findOne({ where })
+    .then((user) => {
+      if (!user) {
+        res.status(HTTPStatus.NOT_FOUND).json({ error: errorCodes.USER_NOT_FOUND });
+        return;
+      }
+      const token = uuidV4();
+      TokenModel.upsert({ userId: user.id, token })
+        .then(() => {
+          res.status(HTTPStatus.OK).end();
+          // const resetUrl = `${req.protocol}://${req.get('host')}/user/reset/${token}`;
+          // const emailData = { user, resetUrl };
+          // emailUtils.sendEmail(user.email, 'passwordReset', emailData, emails.resetPassword.subject)
+      //       .catch((err) => {
+      //         console.log(err);
+      //       });
+        })
+        .catch((error) => {
+          const errorObj = handleSequelizeErrors(error);
+          res.status(errorObj.status).json({ error: errorObj.error });
+        });
+    })
+    .catch((error) => {
+      const errorObj = handleSequelizeErrors(error);
+      res.status(errorObj.status).json({ error: errorObj.error });
+    });
+})
 
 module.exports = router;

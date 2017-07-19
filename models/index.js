@@ -15,6 +15,7 @@ const db = {
   Sequelize,
   Users: sequelize.import('./users'),
   Tasks: sequelize.import('./tasks'),
+  Tokens: sequelize.import('./tokens'),
 };
 
 
